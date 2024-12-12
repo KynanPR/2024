@@ -15,3 +15,20 @@ export function inputToArray(inputFilePath: string): string[] {
 		throw new Error("File parse was unsuccessful");
 	}
 }
+
+export function rotateArray<Type>(arrayToRotate: Type[][]): Type[][] {
+	// Find the length of the longest sub-array
+	const longest: number = arrayToRotate.toSorted((a, b) => {
+		return a.length - b.length;
+	})[0].length;
+	// Use the length of that array to create the new arrays
+	let baseArray: Type[][] = Array(longest)
+		.fill(null)
+		.map(() => []);
+	arrayToRotate.forEach((subArray, index) => {
+		subArray.forEach((val, jindex) => {
+			baseArray[jindex][index] = val;
+		});
+	});
+	return baseArray;
+}
